@@ -8,6 +8,20 @@ RUN rpmkeys --import http://repo.mysql.com/RPM-GPG-KEY-mysql \
   && rm -rf /var/cache/yum/*
 RUN mkdir /docker-entrypoint-initdb.d
 
+# Build-time metadata as defined at http://label-schema.org
+    ARG BUILD_DATE
+    ARG VCS_REF
+    ARG VERSION
+    LABEL org.label-schema.build-date=$BUILD_DATE \
+          org.label-schema.name="MySQL Docker" \
+          org.label-schema.description="Dockerfiles and scripts for MySQL products" \
+          org.label-schema.url="https://htmlgraphic.com" \
+          org.label-schema.vcs-ref=$VCS_REF \
+          org.label-schema.vcs-url="https://github.com/htmlgraphic/MySQL" \
+          org.label-schema.vendor="HTMLgraphic, LLC" \
+          org.label-schema.version=$VERSION \
+          org.label-schema.schema-version="1.0"
+
 VOLUME /var/lib/mysql
 
 COPY docker-entrypoint.sh /entrypoint.sh
