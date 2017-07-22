@@ -4,7 +4,7 @@ ENV PACKAGE_URL https://repo.mysql.com/yum/mysql-5.7-community/docker/x86_64/mys
 # Install server
 RUN rpmkeys --import http://repo.mysql.com/RPM-GPG-KEY-mysql \
   && yum install -y $PACKAGE_URL \
-  && yum install -y libpwquality \
+  && yum install -y libpwquality vim \
   && rm -rf /var/cache/yum/*
 RUN mkdir /docker-entrypoint-initdb.d
 
@@ -24,6 +24,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 
 VOLUME /var/lib/mysql
 
+COPY my.cnf /etc/my.cnf
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
